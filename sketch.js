@@ -16,8 +16,10 @@ function setup() {
   // 隱藏原始的 HTML 影片元件，只顯示在畫布上
   capture.hide();
 
-  // 初始化 FaceMesh
-  faceMesh = ml5.faceMesh(capture, options, gotFaces);
+  // 初始化 FaceMesh (採用 ml5 v1 推薦格式以消除警告)
+  faceMesh = ml5.faceMesh(options, () => {
+    faceMesh.detectStart(capture, gotFaces);
+  });
 }
 
 function draw() {
@@ -27,6 +29,15 @@ function draw() {
   let vH = windowHeight * 0.5;
   let x = (windowWidth - vW) / 2;
   let y = (windowHeight - vH) / 2;
+
+  // 檢查攝影機是否正常運作
+  if (capture.width === 0) {
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(20);
+    text("正在啟動攝影機，若長時間未顯示請檢查權限設定...", windowWidth / 2, windowHeight / 2);
+    return;
+  }
 
   push();
   // 將座標點移動到影像區域的右上角，準備進行左右翻轉
