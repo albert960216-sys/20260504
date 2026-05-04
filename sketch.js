@@ -31,6 +31,14 @@ function setup() {
 function draw() {
   background('#e7c6ff');
 
+  // 顯示學號與姓名
+  push();
+  fill(0);
+  textSize(20);
+  textAlign(LEFT, TOP);
+  text("414730464吳昀臻", 10, 10);
+  pop();
+
   let vW = windowWidth * 0.5;
   let vH = windowHeight * 0.5;
   let x = (windowWidth - vW) / 2;
